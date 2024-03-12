@@ -60,7 +60,7 @@ public class Automatisation {
 
     //@Test
     //public static void step3() {
-        step1and2();
+        //step1and2();
         //Actions actions = new Actions(driver);
         //WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         //JavascriptExecutor js = (JavascriptExecutor) driver;
