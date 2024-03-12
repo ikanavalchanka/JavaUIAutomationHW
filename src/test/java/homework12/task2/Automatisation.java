@@ -61,9 +61,9 @@ public class Automatisation {
     //@Test
     //public static void step3() {
         step1and2();
-        Actions actions = new Actions(driver);
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        JavascriptExecutor js = (JavascriptExecutor) driver;
+        //Actions actions = new Actions(driver);
+        //WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        //JavascriptExecutor js = (JavascriptExecutor) driver;
         //Set<String> currentwindows = driver.getWindowHandles();
         //System.out.println(currentwindows + driver.getCurrentUrl());
         //WebElement clearButton = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div.BKRPef")));
