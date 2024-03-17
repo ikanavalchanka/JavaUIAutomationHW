@@ -38,6 +38,13 @@ public class TestForAndersenPage {
         }
     }
 
+    @AfterClass
+    public static void tearDown() {
+        if (driver != null) {
+            driver.quit();
+        }
+    }
+
     @Test //Confirm that the system handles an incorrect password correctly
     public void testingLoginWithIncorrectPassword() {
         loginPage = new ConfigForLoginPage(driver);
@@ -98,14 +105,7 @@ public class TestForAndersenPage {
         loginPage = new ConfigForLoginPage(driver);
         loginPage.openLoginPage();
         loginPage.logInAsRegisteredUser1AndOpenEditAccountPage("testuser1@mail", "12345678");
-        Assert.assertTrue(driver.getCurrentUrl().equals("https://qa-course-01.andersenlab.com/editAccount") , " Page edit Account does not open");
-    }
-
-   @AfterClass
-    public static void tearDown() {
-     if (driver != null) {
-         driver.quit();
-    }
+        Assert.assertEquals(driver.getCurrentUrl(), "https://qa-course-01.andersenlab.com/editAccount", " Page edit Account does not open");
     }
 
     public static class TestNGListener implements ITestListener {
