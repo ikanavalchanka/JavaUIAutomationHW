@@ -1,5 +1,6 @@
 package homework13.config;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -15,25 +16,25 @@ import java.time.Duration;
 
 public class ConfigForRegistrationPage {
     @FindBy(name = "firstName")
-    private static WebElement firstNameField;
+    private  WebElement firstNameField;
     @FindBy(name = "lastName")
-    private static WebElement lastNameField;
+    private  WebElement lastNameField;
     @FindBy(name = "dateOfBirth")
-    private static WebElement dateOfBirthField;
+    private  WebElement dateOfBirthField;
     @FindBy(name = "email")
-    private static WebElement emailFieldRegistrationPage;
+    private WebElement emailFieldRegistrationPage;
     @FindBy(name = "password")
-    private static WebElement passwordField;
+    private  WebElement passwordField;
     @FindBy(name = "passwordConfirmation")
-    private static WebElement passwordConfirmationField;
+    private  WebElement passwordConfirmationField;
     @FindBy(xpath = "//button[@class='mt-7 h-10 bg-[#feda00] rounded-3xl w-full' and text()='Submit']")
-    private static WebElement submitButton;
+    private  WebElement submitButton;
     @FindBy(xpath = "//span[@class='absolute right-0 text-rose-500 text-sm' and text()='Invalid email address']")
-    private static WebElement emailFieldErrorMessage;
+    private  WebElement emailFieldErrorMessage;
     @FindBy(xpath = "//span[@class='absolute right-0 text-rose-500 text-sm' and text()='Passwords must match']")
-    private static WebElement passwordFieldErrorMessage;
+    private  WebElement passwordFieldErrorMessage;
     @FindBy(xpath = "//span[@class='absolute right-0 text-rose-500 text-sm' and text()='Required']  ")
-    private static WebElement requiredErrorMessage;
+    private  WebElement requiredErrorMessage;
     private WebDriver driver;
     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
@@ -42,44 +43,53 @@ public class ConfigForRegistrationPage {
         PageFactory.initElements(driver, this);
     }
 
+    @Step("Opening Registration page")
     public void openRegistrationPage() {
         driver.get("https://qa-course-01.andersenlab.com/registration");
     }
 
+
+    @Step("Entering firstname")
     public void enterFirstName(String firstName) {
         wait.until(ExpectedConditions.elementToBeClickable(firstNameField));
         firstNameField.sendKeys(firstName);
     }
 
+    @Step("Entering lastname")
     public void enterLastName(String lastName) {
         wait.until(ExpectedConditions.elementToBeClickable(lastNameField));
         lastNameField.sendKeys(lastName);
     }
 
-    public void selectDateOfBirth() {
-        Select dateOfBirthDropdown = new Select(dateOfBirthField);
-    }
+    //public void selectDateOfBirth() {
+        //Select dateOfBirthDropdown = new Select(dateOfBirthField);
+    //}
 
+    @Step("Entering email")
     public void enterEmailR(String email) {
         wait.until(ExpectedConditions.elementToBeClickable(emailFieldRegistrationPage));
         emailFieldRegistrationPage.sendKeys(email);
     }
 
+    @Step("Entering password")
     public void enterPassword(String password) {
         wait.until(ExpectedConditions.elementToBeClickable(passwordField));
         passwordField.sendKeys(password);
     }
 
+    @Step("Entering password confirmation")
     public void confirmPasword(String passwordConfirm) {
         wait.until(ExpectedConditions.elementToBeClickable(passwordConfirmationField));
         passwordConfirmationField.sendKeys(passwordConfirm);
     }
 
+    @Step("Clicking submit button")
     public void clickSubmitButton() {
         wait.until(ExpectedConditions.elementToBeClickable(submitButton));
         submitButton.click();
     }
 
+    @Step("Checking if error message displayed")
     public boolean checkErrorMessageForEmailField() {
         wait.until(ExpectedConditions.visibilityOf(emailFieldErrorMessage));
         boolean isEmailErrorMessageDisplayed = emailFieldErrorMessage.isDisplayed();
@@ -89,6 +99,7 @@ public class ConfigForRegistrationPage {
         return isEmailErrorMessageDisplayed;
     }
 
+    @Step("Checking if error message displayed")
     public boolean checkPasswordsErrorMessage() {
         wait.until(ExpectedConditions.elementToBeClickable(passwordFieldErrorMessage));
         boolean isPasswordErrorMessageDisplayed = passwordFieldErrorMessage.isDisplayed();
@@ -98,6 +109,7 @@ public class ConfigForRegistrationPage {
         return isPasswordErrorMessageDisplayed;
     }
 
+    @Step("Checking if error message displayed")
     public boolean checkRequiredErrorMessage() {
         wait.until(ExpectedConditions.visibilityOf(requiredErrorMessage));
         boolean isRequiredMessageDisplayed = requiredErrorMessage.isDisplayed();
@@ -107,12 +119,9 @@ public class ConfigForRegistrationPage {
         return isRequiredMessageDisplayed;
     }
 
+    @Step("Pressing the tab key")
     public void pressTabKey() {
         Actions actions = new Actions(driver);
         actions.sendKeys(Keys.TAB).perform();
-    }
-
-    private static class LocatorsForRegistrationPage {
-        private final static By emailFieldRegistrationPage = By.name("email");
     }
 }

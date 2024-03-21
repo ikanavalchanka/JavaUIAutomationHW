@@ -16,7 +16,7 @@ public class Driver2 {
         return driver;
     }
 
-    private static WebDriver getInstance() {
+    public static WebDriver getInstance() {
         if (driver == null) {
             try {
                 driver = chromeSetDriver2();

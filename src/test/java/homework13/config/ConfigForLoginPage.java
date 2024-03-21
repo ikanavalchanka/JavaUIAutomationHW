@@ -1,5 +1,6 @@
 package homework13.config;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,19 +13,19 @@ import java.time.Duration;
 
 public class ConfigForLoginPage {
     @FindBy(name = "email")
-    private static WebElement emailField;
+    private  WebElement emailField;
     @FindBy(name = "password")
-    private static WebElement passworfField;
+    private  WebElement passworfField;
     @FindBy(xpath = "//button[text()='Sign in']")
-    private static WebElement submitButton;
+    private  WebElement submitButton;
     @FindBy(xpath = "//span[text()='Email or password is not valid']")
-    private static WebElement errorMessage;
+    private  WebElement errorMessage;
     @FindBy(xpath = "//span[contains(text(), 'Required')]")
-    private static WebElement requiredMessage;
+    private  WebElement requiredMessage;
     @FindBy(xpath = "//a[@href='/registration']")
-    private static WebElement registrationButton;
+    private  WebElement registrationButton;
     @FindBy(xpath = "//a[@href='/editAccount']")
-    private static WebElement editAccountButton;
+    private  WebElement editAccountButton;
     private WebDriver driver;
     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
@@ -33,25 +34,29 @@ public class ConfigForLoginPage {
         PageFactory.initElements(driver, this);
     }
 
+    @Step ("Opening login page")
     public void openLoginPage() {
         driver.get("https://qa-course-01.andersenlab.com/login");
     }
-
+    @Step ("Entering Email")
     public void enterEmail(String email) {
         wait.until(ExpectedConditions.elementToBeClickable(emailField));
         emailField.sendKeys(email);
     }
 
+    @Step ("Entering password")
     public void enterPassword(String password) {
         passworfField.sendKeys(password);
     }
 
-    public void clickSubmitButton() {
+    @Step ("Clicking on submit button") public void clickSubmitButton() {
         wait.until(ExpectedConditions.elementToBeClickable(submitButton));
         submitButton.click();
 
     }
 
+
+    @Step ("Logging in as a registered user and opening edit account page")
     public void logInAsRegisteredUser1AndOpenEditAccountPage(String email1, String password1) {
         emailField.sendKeys(email1);
         passworfField.sendKeys(password1);
@@ -61,6 +66,7 @@ public class ConfigForLoginPage {
         driver.getCurrentUrl();
     }
 
+    @Step ("Checking Error message")
     public boolean checkIfErrorMessageIsDisplayed() {
         wait.until(ExpectedConditions.visibilityOf(errorMessage));
         boolean isErrorMessageDisplayed = errorMessage.isDisplayed();
@@ -70,6 +76,7 @@ public class ConfigForLoginPage {
         return isErrorMessageDisplayed;
     }
 
+    @Step ("Checking Error message 'Required'")
     public boolean checkIfRequiredMessageIsDisplayed() {
         wait.until(ExpectedConditions.visibilityOf(requiredMessage));
         boolean isRequiredMessageDisplayed = requiredMessage.isDisplayed();
@@ -79,13 +86,9 @@ public class ConfigForLoginPage {
         return isRequiredMessageDisplayed;
     }
 
+    @Step ("Clicking Registration button")
     public void clickRegistrationButton() {
         wait.until(ExpectedConditions.elementToBeClickable(registrationButton));
         registrationButton.click();
     }
-
-    private static class LocatorsForLoginPage {
-        private final static By emailField = By.name("email");
-    }
-
 }
