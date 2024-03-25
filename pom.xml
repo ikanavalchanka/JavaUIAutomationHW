@@ -13,7 +13,7 @@
         <maven.surefire.version>3.0.0-M8</maven.surefire.version>
         <maven.compiler.version>3.8.1</maven.compiler.version>
         <aspectj.version>1.9.6</aspectj.version>
-        <selenium-java.version>4.18.1</selenium-java.version>
+        <selenium-java.version>3.141.59</selenium-java.version>
         <webdrivermanager.version>5.7.0</webdrivermanager.version>
         <testng.version>7.0.0</testng.version>
         <allure.testng>2.13.5</allure.testng>
@@ -31,6 +31,11 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.appium</groupId>
+            <artifactId>java-client</artifactId>
+            <version>7.3.0</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
