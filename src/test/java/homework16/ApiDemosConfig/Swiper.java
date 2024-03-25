@@ -50,11 +50,15 @@ public class Swiper {
         }
     }
 
+    public static final Duration SWIPE_DURATION = Duration.ofMillis(500);
+
     private void swipe(int startX, int startY, int finishX, int finishY) {
         new TouchAction<>(driver)
                 .press(PointOption.point(startX, startY))
+                .waitAction(WaitOptions.waitOptions(SWIPE_DURATION)) // Установите длительность свайпа
                 .moveTo(PointOption.point(finishX, finishY))
                 .release()
                 .perform();
     }
+
 }

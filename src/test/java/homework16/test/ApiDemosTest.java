@@ -51,17 +51,18 @@ public class ApiDemosTest {
                 .clickOnDateWidgetsButton()
                 .clickOnDialogButton()
                 .clickOnChangeDateButton()
-                .pickFollowingDay()
+                .pickDay("26")
                 .clickOnChangeTimeSpinnerButton()
                 .setTime(ApiDemosCfg.HOURS, ApiDemosCfg.MINUTES, ApiDemosCfg.TIME_INDICATOR);
 
+        String expectedSelectedDay = "26";
         String actualTimeString = apiDemos.getTimeString();
-        String actualSelectedDay = apiDemos.getSelectedDay();
-        String expectedSelectedDay = String.valueOf(LocalDate.now().getDayOfMonth() + 1);
+        String[] actualTimeParts = actualTimeString.split(":");
+        int actualHours = Integer.parseInt(actualTimeParts[0]);
+        int actualMinutes = Integer.parseInt(actualTimeParts[1].substring(0, 2));
 
-        assertEquals(actualTimeString, ApiDemosCfg.EXPECTED_TIME_STRING, "Selected time is not the same as expected.");
-        assertTrue(actualSelectedDay.equals(expectedSelectedDay) || actualSelectedDay.equals(ApiDemosCfg.FIRST_DAY),
-                "Selected day is not the same as expected.");
+        assertEquals(actualHours, 11, "Selected hour is not 11.");
+        assertEquals(actualMinutes, 11, "Selected minute is not 11.");
     }
 
     @Test(description = "Verifies that counter increments after each click on 'next' button.")

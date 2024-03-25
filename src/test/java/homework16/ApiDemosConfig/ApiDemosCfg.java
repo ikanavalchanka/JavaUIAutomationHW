@@ -15,7 +15,6 @@ import io.appium.java_client.MobileBy;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.touch.LongPressOptions;
 import io.appium.java_client.touch.offset.ElementOption;
-import static sun.awt.SunToolkit.DEFAULT_WAIT_TIME;
 
 public class ApiDemosCfg {
 
@@ -37,7 +36,7 @@ public class ApiDemosCfg {
     private static final By textSwitcher = MobileBy.xpath("//android.widget.TextView[@content-desc='TextSwitcher']");
     private static final By nextButton = MobileBy.xpath("//android.widget.Button[@content-desc='Next']");
     private static final By clickAmount = MobileBy.xpath("//android.widget.TextSwitcher[@resource-id='io.appium.android.apis:id/switcher']/android.widget.TextView");
-
+    public static final int DEFAULT_WAIT_TIME = 50;
     public static final int EXPECTED_NUMBER_OF_MENU_ITEMS = 42;
     public static final int EXPECTED_COUNTER_VALUE = 5;
     public static final String HOURS = "11";
@@ -87,6 +86,12 @@ public class ApiDemosCfg {
         wait.until(ExpectedConditions.visibilityOfElementLocated(dateOkButton)).click();
         return this;
     }
+    public ApiDemosCfg pickDay(String day) {
+        String dynamicDateXpath = String.format("//android.view.View[@text='%s']", day);
+        driver.findElement(By.xpath(dynamicDateXpath)).click();
+        driver.findElement(dateOkButton).click();
+        return this;
+    }
 
     public ApiDemosCfg setTime(String hours, String minutes, String timeIndicator) {
         Actions action = new Actions(driver);
@@ -107,7 +112,10 @@ public class ApiDemosCfg {
         driver.findElement(dateOkButton).click();
         return selectedDay1;
     }
-
+    public boolean isDaySelected(String day) {
+        String selectedDay = driver.findElement(By.xpath("//android.view.View[contains(@content-desc,'selected')]")).getAttribute("content-desc");
+        return selectedDay.equals(day);
+    }
     public String getTimeString() {
         clickOnChangeTimeSpinnerButton();
         String hours = driver.findElement(hoursSpinner).getText();
@@ -119,6 +127,7 @@ public class ApiDemosCfg {
 
     public ApiDemosCfg openTextSwitcher() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(animation));
+        swiper.swipeUntilElementFound(Swiper.Direction.UP, textSwitcher);
         driver.findElement(textSwitcher).click();
         return this;
     }
@@ -135,14 +144,18 @@ public class ApiDemosCfg {
         return Integer.parseInt(driver.findElement(clickAmount).getText());
     }
 
+    public static final int MAX_SWIPE_ATTEMPTS = 5;
+
     public int countViewsMenuItems() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(animation));
         Set<String> viewsMenuItems = new HashSet<>();
         addVisibleMenuItemsToSet(viewsMenuItems);
         Swiper swiper = new Swiper(driver);
-        while (driver.findElements(webView3).isEmpty()) {
+        int attempts = 0;
+        while (driver.findElements(webView3).isEmpty() && attempts < MAX_SWIPE_ATTEMPTS) {
             swiper.swipe(Swiper.Direction.UP);
             addVisibleMenuItemsToSet(viewsMenuItems);
+            attempts++;
         }
         return viewsMenuItems.size();
     }
